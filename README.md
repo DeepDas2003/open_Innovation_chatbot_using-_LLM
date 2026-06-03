@@ -3,4 +3,6 @@
 
     ***  Innovation Chatbot***
 
-    "C:\Users\user\Videos\Screen Recordings\Screen Recording 2026-06-03 092136.mp4"
+  
+
+<img width="1283" height="899" alt="image" src="https://github.com/user-attachments/assets/9b35bdc1-9225-4331-a555-10aca463fdfe" />
