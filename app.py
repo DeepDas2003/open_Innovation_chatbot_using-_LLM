@@ -7,9 +7,7 @@ import pickle
 from sentence_transformers import SentenceTransformer
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
-# =====================================================
-# CONFIG
-# =====================================================
+
 
 st.set_page_config(page_title="Hybrid AI Chatbot", page_icon="🤖")
 st.title("🤖 Hybrid Open Innovation Chatbot")
@@ -17,9 +15,7 @@ st.title("🤖 Hybrid Open Innovation Chatbot")
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 MODEL_NAME = "Qwen/Qwen2.5-3B-Instruct"
 
-# =====================================================
-# LOAD KNOWLEDGE BASE (RAG)
-# =====================================================
+
 
 @st.cache_resource
 def load_kb():
@@ -30,9 +26,6 @@ def load_kb():
 
 index, chunks = load_kb()
 
-# =====================================================
-# EMBEDDING MODEL
-# =====================================================
 
 @st.cache_resource
 def load_embedder():
@@ -43,9 +36,6 @@ def load_embedder():
 
 embedder = load_embedder()
 
-# =====================================================
-# LLM
-# =====================================================
 
 @st.cache_resource
 def load_llm():
@@ -67,9 +57,7 @@ def load_llm():
 
 tokenizer, llm = load_llm()
 
-# =====================================================
-# RETRIEVAL ENGINE
-# =====================================================
+
 
 def retrieve_context(query, k=3):
 
@@ -86,9 +74,6 @@ def retrieve_context(query, k=3):
 
     return "\n\n".join(results[:2])
 
-# =====================================================
-# SMART ROUTER (CORE OF HYBRID SYSTEM)
-# =====================================================
 
 def route_query(query):
 
@@ -118,9 +103,6 @@ def route_query(query):
 
     return "general"
 
-# =====================================================
-# SYSTEM PROMPT
-# =====================================================
 
 SYSTEM_PROMPT = """
 You are a powerful AI assistant for Open Innovation.
@@ -142,19 +124,12 @@ You can answer anything from:
 Be natural like ChatGPT.
 """
 
-# =====================================================
-# GENERATION ENGINE
-# =====================================================
-
 def generate_answer(question):
 
     mode = route_query(question)
 
     context = ""
 
-    # =========================
-    # RAG MODE
-    # =========================
     if mode == "rag":
         context = retrieve_context(question)
 
@@ -211,16 +186,10 @@ Knowledge Base Context (use only if relevant):
 
     return tokenizer.decode(result, skip_special_tokens=True).strip(), mode
 
-# =====================================================
-# CHAT MEMORY
-# =====================================================
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# =====================================================
-# UI
-# =====================================================
 
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
