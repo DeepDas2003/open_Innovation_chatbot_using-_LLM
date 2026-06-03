@@ -1,0 +1,6 @@
+faiss
+sentence_transformers
+pypdf
+streamlit 
+transformers
+langchain
